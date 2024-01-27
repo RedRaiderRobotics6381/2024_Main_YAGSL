@@ -21,8 +21,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Vision.LLDriveToAprilTagPosCmd;
-import frc.robot.commands.Vision.LLDriveToObjectCmd;
+import frc.robot.commands.Vision.DriveToAprilTagPosCmd;
+//import frc.robot.commands.Vision.LLDriveToAprilTagPosCmd;
+//import frc.robot.commands.Vision.LLDriveToObjectCmd;
 import frc.robot.commands.swervedrive.auto.AutoBalanceCommand;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteFieldDriveAng;
@@ -31,6 +32,9 @@ import frc.robot.subsystems.Secondary.ArmIntakeSubsystem;
 import frc.robot.subsystems.Secondary.ArmRotateSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
+import java.util.function.Supplier;
+
+import org.photonvision.PhotonCamera;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -47,8 +51,11 @@ public class RobotContainer
   private final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                          "swerve/neo"));
 
+  private final PhotonCamera photonCamera = new PhotonCamera("photonvision");
+
   public static XboxController driverXbox = new XboxController(0);
   public static XboxController engineerXbox = new XboxController(1);
+  private final Supplier<Pose2d> poseProvider = drivebase::getPose;
 
   private final SendableChooser<Command> autoChooser;
 
@@ -70,8 +77,8 @@ public class RobotContainer
     NamedCommands.registerCommand("armIntake", armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedIn));
     NamedCommands.registerCommand("armHold", armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedHold));
     NamedCommands.registerCommand("armOut", armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedOut));
-    NamedCommands.registerCommand("alignCone", new LLDriveToObjectCmd(drivebase, 0));
-    NamedCommands.registerCommand("alignCube", new LLDriveToObjectCmd(drivebase, 1));
+    //NamedCommands.registerCommand("alignCone", new LLDriveToObjectCmd(drivebase, 0));
+    //NamedCommands.registerCommand("alignCube", new LLDriveToObjectCmd(drivebase, 1));
 
     // Build an auto chooser. This will use Commands.none() as the default option.
     autoChooser = AutoBuilder.buildAutoChooser();
@@ -172,8 +179,16 @@ public class RobotContainer
     //new JoystickButton(engineerXbox,7 ).whileTrue(new DriveGyro180Cmd(swerveSubsystem));
 
     // new JoystickButton(driverXbox, 5).whileTrue(new LLDriveToObjectCmd(drivebase, 0));
-    new JoystickButton(driverXbox, 5).whileTrue(new LLDriveToAprilTagPosCmd(drivebase, 0, 7));
-    new JoystickButton(driverXbox, 6).whileTrue(new LLDriveToAprilTagPosCmd(drivebase, 0, 7));
+    // new JoystickButton(driverXbox, 5).whileTrue(new LLDriveToAprilTagPosCmd(drivebase, 0, 7));
+    // new JoystickButton(driverXbox, 6).whileTrue(new LLDriveToAprilTagPosCmd(drivebase, 0, 7));
+    new JoystickButton(driverXbox, 5).whileTrue(new DriveToAprilTagPosCmd(photonCamera,
+                                                                                       drivebase,
+                                                                                       poseProvider,
+                                                                                       0,
+                                                                                       11,
+                                                                                       60.0,
+                                                                                       0.0,
+                                                                                       0.0));
 
     //new JoystickButton(driverXbox, 4).onTrue((new InstantCommand(drivebase::zeroGyro)));
     //new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(drivebase::addFakeVisionReading));
