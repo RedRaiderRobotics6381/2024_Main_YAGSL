@@ -15,6 +15,9 @@ import frc.robot.subsystems.Secondary.ArmRotateSubsystem;
 import java.io.File;
 import java.io.IOException;
 
+import org.photonvision.PhotonCamera;
+import org.photonvision.common.hardware.VisionLEDMode;
+
 import com.revrobotics.CANSparkMax;
 
 import swervelib.parser.SwerveParser;
@@ -33,6 +36,7 @@ public class Robot extends TimedRobot
   private RobotContainer m_robotContainer;
 
   private Timer disabledTimer;
+  PhotonCamera camera = new PhotonCamera("photonvision");
 
   public Robot()
   {
@@ -57,7 +61,8 @@ public class Robot extends TimedRobot
     // Create a timer to disable motor brake a few seconds after disable.  This will let the robot stop
     // immediately when disabled, but then also let it be pushed more 
     disabledTimer = new Timer();
-    LimelightHelpers.setLEDMode_ForceOff("");
+    //LimelightHelpers.setLEDMode_ForceOff("");
+    camera.setLED(VisionLEDMode.kOff);
     DriverStation.silenceJoystickConnectionWarning(true); // Disable joystick connection warning
   }
 
@@ -85,7 +90,8 @@ public class Robot extends TimedRobot
   public void disabledInit()
   {
     m_robotContainer.setMotorBrake(true);
-    LimelightHelpers.setLEDMode_ForceOff("");
+    camera.setLED(VisionLEDMode.kOff);
+    //LimelightHelpers.setLEDMode_ForceOff("");
     disabledTimer.reset();
     disabledTimer.start();
   }
@@ -107,6 +113,7 @@ public class Robot extends TimedRobot
   public void autonomousInit()
   {
     m_robotContainer.setMotorBrake(true);
+    camera.setLED(VisionLEDMode.kDefault);
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -138,9 +145,14 @@ public class Robot extends TimedRobot
     m_robotContainer.setDriveMode();
     //m_robotContainer.setMotorBrake(true);
     ArmRotateSubsystem.ArmRotateSetpoint = 90;
-    LimelightHelpers.setCameraMode_Processor("null");
-    LimelightHelpers.setLEDMode_ForceOn("");
-    LimelightHelpers.setPipelineIndex("",0);
+
+    camera.setDriverMode(false);
+    camera.setLED(VisionLEDMode.kDefault);
+    camera.setPipelineIndex(0);
+
+    // LimelightHelpers.setCameraMode_Processor("null");
+    // LimelightHelpers.setLEDMode_ForceOn("");
+    // LimelightHelpers.setPipelineIndex("",0);
   }
 
   /**
