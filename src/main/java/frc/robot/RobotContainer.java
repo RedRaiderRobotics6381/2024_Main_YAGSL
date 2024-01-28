@@ -19,9 +19,11 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.AprilTagConstants;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Vision.DriveToAprilTagPosCmd;
+import frc.robot.commands.Vision.DriveToObjectCmd;
 //import frc.robot.commands.Vision.LLDriveToAprilTagPosCmd;
 //import frc.robot.commands.Vision.LLDriveToObjectCmd;
 import frc.robot.commands.swervedrive.auto.AutoBalanceCommand;
@@ -77,10 +79,9 @@ public class RobotContainer
     NamedCommands.registerCommand("armIntake", armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedIn));
     NamedCommands.registerCommand("armHold", armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedHold));
     NamedCommands.registerCommand("armOut", armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedOut));
-    NamedCommands.registerCommand("alignSpeakerRed", new DriveToAprilTagPosCmd(photonCamera, drivebase, 0, 4));
-    NamedCommands.registerCommand("alignSpeakerBlue", new DriveToAprilTagPosCmd(photonCamera, drivebase, 0, 7));
-
-    //NamedCommands.registerCommand("alignCube", new LLDriveToObjectCmd(drivebase, 1));
+    NamedCommands.registerCommand("alignSpeaker", new DriveToAprilTagPosCmd(photonCamera, drivebase, 0, AprilTagConstants.speakerID));
+    NamedCommands.registerCommand("alignAmp", new DriveToAprilTagPosCmd(photonCamera, drivebase, 0, AprilTagConstants.ampID));
+    NamedCommands.registerCommand("alignNote", new DriveToObjectCmd(drivebase, 1));
 
     // Build an auto chooser. This will use Commands.none() as the default option.
     autoChooser = AutoBuilder.buildAutoChooser();

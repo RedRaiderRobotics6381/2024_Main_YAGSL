@@ -37,7 +37,7 @@ public final class Constants
   {
 
     // Hold time on motor brakes when disabled
-    public static final double WHEEL_LOCK_TIME = 10; // seconds
+    public static final double WHEEL_LOCK_TIME = 10;
   }
 
   public static class OperatorConstants
@@ -63,4 +63,13 @@ public final class Constants
     public static final double posDrive = 190; //Was 200 see note in ArmRotateSubsystem.java
     public static final double posIntake = 90; //Was 132.5 see note in ArmRotateSubsystem.java
   }
+  public static final class AprilTagConstants {
+  public static int ampID = 0;
+  public static int speakerID = 0;
+  public static int stageIDA = 0;
+  public static int stageIDB = 0;
+  public static int stageIDC = 0;
+  
+  }
+
 }

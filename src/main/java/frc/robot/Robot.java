@@ -5,15 +5,18 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.AprilTagConstants;
 import frc.robot.subsystems.Secondary.ArmRotateSubsystem;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 import org.photonvision.PhotonCamera;
 import org.photonvision.common.hardware.VisionLEDMode;
@@ -64,6 +67,23 @@ public class Robot extends TimedRobot
     //LimelightHelpers.setLEDMode_ForceOff("");
     camera.setLED(VisionLEDMode.kOff);
     DriverStation.silenceJoystickConnectionWarning(true); // Disable joystick connection warning
+    Optional<Alliance> allianceColor = DriverStation.getAlliance();
+    if (allianceColor.isPresent()) {
+        if (allianceColor.get() == Alliance.Red) {
+          AprilTagConstants.ampID     = 5;
+          AprilTagConstants.speakerID = 4;
+          AprilTagConstants.stageIDA  = 13;
+          AprilTagConstants.stageIDB  = 12;
+          AprilTagConstants.stageIDC  = 11;
+        }
+        if (allianceColor.get() == Alliance.Blue) {
+          AprilTagConstants.ampID     = 6;
+          AprilTagConstants.speakerID = 7;
+          AprilTagConstants.stageIDA  = 14;
+          AprilTagConstants.stageIDB  = 15;
+          AprilTagConstants.stageIDC  = 16;
+        }
+      }
   }
 
   /**
