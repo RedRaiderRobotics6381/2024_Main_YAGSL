@@ -16,10 +16,7 @@
 // import edu.wpi.first.wpilibj.XboxController;
 
 
-// /**
-//  * Auto Balance command using a simple PID controller. Created by Team 3512
-//  * https://github.com/frc3512/Robot-2023/blob/main/src/main/java/frc3512/robot/commands/AutoBalance.java
-//  */
+
 // public class PVDriveToObjectCmd extends Command
 // {
 
@@ -27,7 +24,7 @@
 //   private final PIDController   xController;
 //   private final PIDController   yController;
 //   private double visionObject;
-//   PhotonCamera camera = new PhotonCamera("OV5647");
+//   PhotonCamera camera = new PhotonCamera("photonvision");
 
 //   public PVDriveToObjectCmd(SwerveSubsystem swerveSubsystem, double visionObject)
 //   {
