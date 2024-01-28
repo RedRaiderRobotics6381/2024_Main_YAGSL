@@ -5,16 +5,16 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
+//import edu.wpi.first.math.geometry.Pose2d;
+//import edu.wpi.first.math.geometry.Rotation2d;
+//import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
+//import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -26,13 +26,13 @@ import frc.robot.commands.Vision.DriveToAprilTagPosCmd;
 //import frc.robot.commands.Vision.LLDriveToObjectCmd;
 import frc.robot.commands.swervedrive.auto.AutoBalanceCommand;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
-import frc.robot.commands.swervedrive.drivebase.AbsoluteFieldDriveAng;
+//import frc.robot.commands.swervedrive.drivebase.AbsoluteFieldDriveAng;
 //import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
 import frc.robot.subsystems.Secondary.ArmIntakeSubsystem;
 import frc.robot.subsystems.Secondary.ArmRotateSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
-import java.util.function.Supplier;
+//import java.util.function.Supplier;
 
 import org.photonvision.PhotonCamera;
 
@@ -55,7 +55,7 @@ public class RobotContainer
 
   public static XboxController driverXbox = new XboxController(0);
   public static XboxController engineerXbox = new XboxController(1);
-  private final Supplier<Pose2d> poseProvider = drivebase::getPose;
+  //private final Supplier<Pose2d> poseProvider = drivebase::getPose;
 
   private final SendableChooser<Command> autoChooser;
 
@@ -77,7 +77,9 @@ public class RobotContainer
     NamedCommands.registerCommand("armIntake", armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedIn));
     NamedCommands.registerCommand("armHold", armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedHold));
     NamedCommands.registerCommand("armOut", armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedOut));
-    //NamedCommands.registerCommand("alignCone", new LLDriveToObjectCmd(drivebase, 0));
+    NamedCommands.registerCommand("alignSpeakerRed", new DriveToAprilTagPosCmd(photonCamera, drivebase, 0, 4));
+    NamedCommands.registerCommand("alignSpeakerBlue", new DriveToAprilTagPosCmd(photonCamera, drivebase, 0, 7));
+
     //NamedCommands.registerCommand("alignCube", new LLDriveToObjectCmd(drivebase, 1));
 
     // Build an auto chooser. This will use Commands.none() as the default option.
@@ -90,7 +92,7 @@ public class RobotContainer
                                                                                                 OperatorConstants.LEFT_Y_DEADBAND),
                                                                    () -> MathUtil.applyDeadband(-driverXbox.getLeftX(),
                                                                                                 OperatorConstants.LEFT_X_DEADBAND),
-                                                                   () -> MathUtil.applyDeadband(driverXbox.getRightX(),
+                                                                   () -> MathUtil.applyDeadband(driverXbox.getRawAxis(4),
                                                                                                 OperatorConstants.RIGHT_X_DEADBAND),
                                                                    driverXbox.getPOV());
 
@@ -110,24 +112,24 @@ public class RobotContainer
     // controls are front-left positive
     // left stick controls translation
     // right stick controls the angular velocity of the robot
-    Command driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
-        () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(-driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-        () -> MathUtil.applyDeadband(-driverXbox.getRawAxis(4), OperatorConstants.RIGHT_X_DEADBAND));
+    // Command driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
+    //     () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
+    //     () -> MathUtil.applyDeadband(-driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+    //     () -> MathUtil.applyDeadband(-driverXbox.getRawAxis(4), OperatorConstants.RIGHT_X_DEADBAND));
 
-    Command driveFieldOrientedDirectAngleSim = drivebase.simDriveCommand(
-        () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getRawAxis(4), OperatorConstants.RIGHT_X_DEADBAND));
+    // Command driveFieldOrientedDirectAngleSim = drivebase.simDriveCommand(
+    //     () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
+    //     () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+    //     () -> MathUtil.applyDeadband(driverXbox.getRawAxis(4), OperatorConstants.RIGHT_X_DEADBAND));
 
-    AbsoluteFieldDriveAng closedFieldAbsoluteDriveAng = new AbsoluteFieldDriveAng(drivebase,
-                                                                      () ->
-                                                                          MathUtil.applyDeadband(-driverXbox.getLeftY(),
-                                                                                                OperatorConstants.LEFT_Y_DEADBAND),
-                                                                      () -> MathUtil.applyDeadband(-driverXbox.getLeftX(),
-                                                                                                  OperatorConstants.LEFT_X_DEADBAND),
-                                                                      () -> MathUtil.applyDeadband(driverXbox.getRawAxis(4),
-                                                                                                  OperatorConstants.RIGHT_X_DEADBAND));
+    // AbsoluteFieldDriveAng closedFieldAbsoluteDriveAng = new AbsoluteFieldDriveAng(drivebase,
+    //                                                                   () ->
+    //                                                                       MathUtil.applyDeadband(-driverXbox.getLeftY(),
+    //                                                                                             OperatorConstants.LEFT_Y_DEADBAND),
+    //                                                                   () -> MathUtil.applyDeadband(-driverXbox.getLeftX(),
+    //                                                                                               OperatorConstants.LEFT_X_DEADBAND),
+    //                                                                   () -> MathUtil.applyDeadband(driverXbox.getRawAxis(4),
+    //                                                                                               OperatorConstants.RIGHT_X_DEADBAND));
 
 
     drivebase.setDefaultCommand(
@@ -160,9 +162,10 @@ public class RobotContainer
     //Axis 0 is left joystick x side to side
     //Axis 1 is left joystick y forward and back
     //Axis 2 is left trigger 
-    //Axis 3 is right joystick x side to side
-    //Axis 4 is right joystick y forward and back
-    //Axis 5 is right trigger
+    //Axis 3 is right trigger
+    //Axis 4 is right joystick x side to side
+    //Axis 5 is right joystick y forward and back
+
 
     new JoystickButton(driverXbox, 4).onTrue((new InstantCommand(drivebase::zeroGyro)));
 
@@ -181,22 +184,26 @@ public class RobotContainer
     // new JoystickButton(driverXbox, 5).whileTrue(new LLDriveToObjectCmd(drivebase, 0));
     // new JoystickButton(driverXbox, 5).whileTrue(new LLDriveToAprilTagPosCmd(drivebase, 0, 7));
     // new JoystickButton(driverXbox, 6).whileTrue(new LLDriveToAprilTagPosCmd(drivebase, 0, 7));
+    // new JoystickButton(driverXbox, 5).whileTrue(new DriveToAprilTagPosCmd(photonCamera,
+    //                                                                                    drivebase,
+    //                                                                                    poseProvider,
+    //                                                                                    0,
+    //                                                                                    11,
+    //                                                                                    60.0,
+    //                                                                                    0.0,
+    //                                                                                    0.0));
     new JoystickButton(driverXbox, 5).whileTrue(new DriveToAprilTagPosCmd(photonCamera,
                                                                                        drivebase,
-                                                                                       poseProvider,
                                                                                        0,
-                                                                                       11,
-                                                                                       60.0,
-                                                                                       0.0,
-                                                                                       0.0));
-
+                                                                                       12));
+    
     //new JoystickButton(driverXbox, 4).onTrue((new InstantCommand(drivebase::zeroGyro)));
     //new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(drivebase::addFakeVisionReading));
-    new JoystickButton(driverXbox,
-                       2).whileTrue(
-        Commands.deferredProxy(() -> drivebase.driveToPose(
-                                   new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0)))
-                              ));
+    // new JoystickButton(driverXbox,
+    //                    2).whileTrue(
+    //     Commands.deferredProxy(() -> drivebase.driveToPose(
+    //                                new Pose2d(new Translation2d(4, 4), Rotation2d.fromDegrees(0)))
+    //                           ));
 //    new JoystickButton(driverXbox, 3).whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
   }
 

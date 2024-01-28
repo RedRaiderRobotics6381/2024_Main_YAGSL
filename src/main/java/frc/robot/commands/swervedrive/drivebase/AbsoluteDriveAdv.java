@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.util.List;
-import java.util.function.BooleanSupplier;
+//import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import swervelib.SwerveController;
 import swervelib.math.SwerveMath;
@@ -29,7 +29,7 @@ public class AbsoluteDriveAdv extends Command
   //private final BooleanSupplier lookAway, lookTowards, lookLeft, lookRight;
   private final int             povHeading;
   private       boolean         resetHeading = false;
-  private       boolean         manualRotation = false;
+  //private       boolean         manualRotation = false;
 
   
   /**

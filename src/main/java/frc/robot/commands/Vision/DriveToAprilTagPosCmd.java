@@ -23,17 +23,13 @@ import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 // import edu.wpi.first.wpilibj.XboxController;
 
 
-/**
- * Auto Balance command using a simple PID controller. Created by Team 3512
- * https://github.com/frc3512/Robot-2023/blob/main/src/main/java/frc3512/robot/commands/AutoBalance.java
- */
 public class DriveToAprilTagPosCmd extends Command
 {
   private int visionObject;
   private int aprilTagID;
-  private double xOffset;
-  private double yOffset;
-  private double omegaOffset;
+  // private double xOffset;
+  // private double yOffset;
+  // private double omegaOffset;
 
   private final SwerveSubsystem swerveSubsystem;
   private static final TrapezoidProfile.Constraints X_CONSTRAINTS = new TrapezoidProfile.Constraints(1.5, 1.0);
@@ -64,16 +60,17 @@ public class DriveToAprilTagPosCmd extends Command
 
   //final double GOAL_RANGE_METERS = Units.feetToMeters(5); //Distance from the goal to stop at
   
-  public DriveToAprilTagPosCmd(PhotonCamera photonCamera,
-                               SwerveSubsystem swerveSubsystem,
-                               Supplier<Pose2d> poseProvider,
-                               int visionObject,
-                               int aprilTagID,
-                               double xOffset,
-                               double yOffset,
-                               double omegaOffset)
-  {
-    
+  // public DriveToAprilTagPosCmd(PhotonCamera photonCamera,
+  //                              SwerveSubsystem swerveSubsystem,
+  //                              Supplier<Pose2d> poseProvider,
+  //                              int visionObject,
+  //                              int aprilTagID,
+  //                              double xOffset,
+  //                              double yOffset,
+  //                              double omegaOffset)
+  // {
+    public DriveToAprilTagPosCmd(PhotonCamera photonCamera, SwerveSubsystem swerveSubsystem, int visionObject, int aprilTagID)
+  {  
     // each subsystem used by the command must be passed into the
     // addRequirements() method (which takes a vararg of Subsystem)
     this.photonCamera = photonCamera;
@@ -81,9 +78,9 @@ public class DriveToAprilTagPosCmd extends Command
     this.poseProvider = swerveSubsystem::getPose;
     this.visionObject = visionObject;
     this.aprilTagID = aprilTagID;
-    this.xOffset = xOffset;
-    this.yOffset = yOffset;
-    this.omegaOffset = omegaOffset;    
+    // this.xOffset = xOffset;
+    // this.yOffset = yOffset;
+    // this.omegaOffset = omegaOffset;    
 
     // xController = new PIDController(.25, 0.01, 0.0001);
     // yController = new PIDController(0.0625, 0.00375, 0.0001);
@@ -136,7 +133,7 @@ public class DriveToAprilTagPosCmd extends Command
       //Find the tag we want to chase
       var targetOpt = photonRes.getTargets().stream()
       .filter(t -> t.getFiducialId() == aprilTagID)
-      .filter(t -> !t.equals(lastTarget) && t.getPoseAmbiguity() <= .2 && t.getPoseAmbiguity() != -1)  //Look here first
+      .filter(t -> !t.equals(lastTarget) && t.getPoseAmbiguity() <= .2 && t.getPoseAmbiguity() != -1)
       .findFirst();
       if (targetOpt.isPresent()) {
         var target = targetOpt.get();
@@ -145,7 +142,7 @@ public class DriveToAprilTagPosCmd extends Command
 
         // Transform the robot's pose to find the camera's pose
         var cameraPose = robotPose
-            .transformBy(new Transform3d(new Translation3d(-0.3425, 0.0, -0.233), new Rotation3d()));
+            .transformBy(new Transform3d(new Translation3d(-.170, -.135, -0.175), new Rotation3d()));
 
         // Trasnform the camera's pose to the target's pose
         var camToTarget = target.getBestCameraToTarget();
