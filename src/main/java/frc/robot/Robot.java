@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Secondary.ArmRotateSubsystem;
+import frc.robot.subsystems.Secondary.Climber;
 
 import java.io.File;
 import java.io.IOException;
@@ -149,12 +150,22 @@ public class Robot extends TimedRobot
   @Override
   public void teleopPeriodic()
   {
-    if(RobotContainer.engineerXbox.getRightY() > 0.1 || RobotContainer.engineerXbox.getRightY() < -0.1){
-      ArmRotateSubsystem.m_armPIDController.setReference((ArmRotateSubsystem.ArmEncoder.getPosition()) +
+   /*  if(RobotContainer.engineerXbox.getRightY() > 0.1 || RobotContainer.engineerXbox.getRightY() < -0.1){
+      Climber.m_climberPIDController.setReference((Climber.ClimberEncoder.getPosition()) +
                                                         (RobotContainer.engineerXbox.getRightY() * 20),
                                                         CANSparkMax.ControlType.kSmartMotion);                                                   
     }
-  }
+    */
+    if (RobotContainer.engineerXbox.getRawButtonPressed(2)) {
+      Climber.m_climberPIDController.setGoal(5);
+    } else if (RobotContainer.engineerXbox.getRawButtonPressed(3)) {
+      Climber.m_climberPIDController.setGoal(0);
+    }
+    Climber.m_climberMotor1.setVoltage(
+      Climber.m_climberPIDController.calculate(Climber.ClimberEncoder.getDistance())
+          + Climber.m_climberFF.calculate(Climber.m_climberPIDController.getSetpoint().velocity));
+}
+  
 
   @Override
   public void testInit()
