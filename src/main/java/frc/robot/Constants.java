@@ -63,13 +63,19 @@ public final class Constants
     public static final double posDrive = 190; //Was 200 see note in ArmRotateSubsystem.java
     public static final double posIntake = 90; //Was 132.5 see note in ArmRotateSubsystem.java
   }
+
   public static final class AprilTagConstants {
-  public static int ampID = 0;
-  public static int speakerID = 0;
-  public static int stageIDA = 0;
-  public static int stageIDB = 0;
-  public static int stageIDC = 0;
-  
+    public static int ampID = 0;
+    public static int speakerID = 0;
+    public static int stageIDA = 0;
+    public static int stageIDB = 0;
+    public static int stageIDC = 0;
   }
+
+  public static final class IntakeConstants {
+    public static final int kIntakeMotor = 0; //need to change
+    public static final int kLauncherIntakeMotor = 0; //need to change
+  }
+
 
 }
