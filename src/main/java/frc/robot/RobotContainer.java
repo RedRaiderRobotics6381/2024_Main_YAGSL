@@ -5,6 +5,8 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.util.Units;
 //import edu.wpi.first.math.geometry.Pose2d;
 //import edu.wpi.first.math.geometry.Rotation2d;
 //import edu.wpi.first.math.geometry.Translation2d;
@@ -169,8 +171,6 @@ public class RobotContainer
 
 
     new JoystickButton(driverXbox, 4).onTrue((new InstantCommand(drivebase::zeroGyro)));
-
-
     new JoystickButton(engineerXbox, 1).onTrue(armRotateSubsystem.rotatePosCommand(ArmConstants.posDrive)); // 180 is vertical 
     new JoystickButton(engineerXbox, 4).onTrue(armRotateSubsystem.rotatePosCommand(ArmConstants.posIntake)); //90 is horizontal 
     
@@ -179,6 +179,17 @@ public class RobotContainer
     new JoystickButton(engineerXbox, 3).onFalse(armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedHold));
     new JoystickButton(engineerXbox,2 ).whileTrue(armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedOut));
     new JoystickButton(engineerXbox, 2).onFalse(armIntakeSubsystem.ArmIntakeCmd(0));
+    if (driverXbox.getRightBumperPressed() && driverXbox.getLeftBumperPressed()){
+      drivebase.maximumSpeed = Units.feetToMeters(14.5);
+    }
+    if (driverXbox.getRightBumperPressed()){
+      drivebase.maximumSpeed = Units.feetToMeters(12.325);
+    }
+    if (driverXbox.getRightBumperReleased() && driverXbox.getLeftBumperReleased()){
+      drivebase.maximumSpeed = Units.feetToMeters(10.875);
+    }
+    
+      
 
     //new JoystickButton(engineerXbox,7 ).whileTrue(new DriveGyro180Cmd(swerveSubsystem));
 
@@ -197,6 +208,7 @@ public class RobotContainer
                                                                                        drivebase,
                                                                                        0,
                                                                                        1));
+    //new JoystickButton(driverXbox, 6).whileTrue(new setMaxDriveSpeed(0.5));
     
     //new JoystickButton(driverXbox, 4).onTrue((new InstantCommand(drivebase::zeroGyro)));
     //new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(drivebase::addFakeVisionReading));
@@ -218,6 +230,10 @@ public class RobotContainer
     // An example command will be run in autonomous
     return autoChooser.getSelected();
   }
+
+  //   public Command setMaxDriveSpeed(double speedModifier)
+  // {
+  // }
 
   public void setDriveMode()
   {
