@@ -14,7 +14,7 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.util.Units;
+//import edu.wpi.first.math.util.Units;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 // import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
@@ -32,11 +32,11 @@ public class DriveToAprilTagPosCmd extends Command
   // private double omegaOffset;
 
   private final SwerveSubsystem swerveSubsystem;
-  private static final TrapezoidProfile.Constraints X_CONSTRAINTS = new TrapezoidProfile.Constraints(1.5, 1.0);
-  private static final TrapezoidProfile.Constraints Y_CONSTRAINTS = new TrapezoidProfile.Constraints(1.5, 1.0);
+  private static final TrapezoidProfile.Constraints X_CONSTRAINTS = new TrapezoidProfile.Constraints(3, 1.5);
+  private static final TrapezoidProfile.Constraints Y_CONSTRAINTS = new TrapezoidProfile.Constraints(3, 1.5);
   private static final TrapezoidProfile.Constraints OMEGA_CONSTRAINTS = new TrapezoidProfile.Constraints(8, 8);
   private static final Transform3d TAG_TO_GOAL = new Transform3d(
-                                                                 new Translation3d(Units.inchesToMeters(60), 0, 0),
+                                                                 new Translation3d(2.25, 0, 0),
                                                                  new Rotation3d(0.0,0.0,Math.PI));
   
   private final PhotonCamera photonCamera;
@@ -90,8 +90,8 @@ public class DriveToAprilTagPosCmd extends Command
     // yController.setIZone(0.1); //0.1 meters
     // zController.setIZone(0.5); //0.5 degrees
 
-    xController.setTolerance(0.2); //0.2 meters
-    yController.setTolerance(0.2); //0.2 meters
+    xController.setTolerance(0.1); //0.2 meters
+    yController.setTolerance(0.1); //0.2 meters
     omegaController.setTolerance(3.0); //3 degrees
     omegaController.enableContinuousInput(-Math.PI, Math.PI);
     
@@ -132,7 +132,7 @@ public class DriveToAprilTagPosCmd extends Command
     if (photonRes.hasTargets()) {
       //Find the tag we want to chase
       var targetOpt = photonRes.getTargets().stream()
-      .filter(t -> t.getFiducialId() == aprilTagID)
+      .filter(t -> t.getFiducialId() == aprilTagID) //Q: How do I ask for or? 
       .filter(t -> !t.equals(lastTarget) && t.getPoseAmbiguity() <= .2 && t.getPoseAmbiguity() != -1)
       .findFirst();
       if (targetOpt.isPresent()) {

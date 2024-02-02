@@ -11,10 +11,55 @@
         "window": {
           "visible": true
         }
+      },
+      "/SmartDashboard/Field": {
+        "bottom": 1476,
+        "height": 8.210550308227539,
+        "left": 150,
+        "right": 2961,
+        "top": 79,
+        "width": 16.541748046875,
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Pigeon 2 (v6) [20]": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+<<<<<<< Updated upstream
+  "NetworkTables Info": {
+=======
+  "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
+    "retained": {
+      "SmartDashboard": {
+        "Auto Chooser": {
+          "open": true
+        },
+        "open": true
       }
     }
   },
   "NetworkTables Info": {
+    "Clients": {
+      "open": true
+    },
+    "Connections": {
+      "open": true
+    },
+    "Server": {
+      "Subscribers": {
+        "open": true
+      },
+      "open": true
+    },
+>>>>>>> Stashed changes
     "visible": true
   }
 }
