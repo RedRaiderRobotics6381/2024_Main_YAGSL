@@ -45,6 +45,7 @@ public class Climber extends SubsystemBase{
         m_climberMotor1 = new CANSparkMax(ClimberConstants.kClimberRotateMotor1, MotorType.kBrushless);
         m_climberMotor2 = new CANSparkMax(ClimberConstants.kClimberRotateMotor2, MotorType.kBrushless);
         m_climberFF = new ElevatorFeedforward(kS, kG, kV);
+        m_climberMotor2.setInverted(true);
         m_climberMotor2.follow(m_climberMotor1);
         m_climberPIDController = new ProfiledPIDController(kP, kI, kD, m_constraints, kDt);
 
