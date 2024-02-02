@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+//import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AprilTagConstants;
+//import frc.robot.commands.Vision.DriveToAprilTagPosCmd;
 import frc.robot.subsystems.Secondary.ArmRotateSubsystem;
 
 import java.io.File;
@@ -21,7 +23,7 @@ import java.util.Optional;
 import org.photonvision.PhotonCamera;
 import org.photonvision.common.hardware.VisionLEDMode;
 
-import com.revrobotics.CANSparkMax;
+//import com.revrobotics.CANSparkMax;
 
 import swervelib.parser.SwerveParser;
 
@@ -70,18 +72,19 @@ public class Robot extends TimedRobot
     Optional<Alliance> allianceColor = DriverStation.getAlliance();
     if (allianceColor.isPresent()) {
         if (allianceColor.get() == Alliance.Red) {
-          AprilTagConstants.ampID     = 5;
-          AprilTagConstants.speakerID = 4;
-          AprilTagConstants.stageIDA  = 13;
-          AprilTagConstants.stageIDB  = 12;
-          AprilTagConstants.stageIDC  = 11;
+          AprilTagConstants.ampID      = 5;
+          AprilTagConstants.speakerID  = 4;
+          AprilTagConstants.stageIDa  = 13;
+          AprilTagConstants.stageIDa  = 12;
+          AprilTagConstants.stageIDa  = 11;
         }
         if (allianceColor.get() == Alliance.Blue) {
-          AprilTagConstants.ampID     = 6;
-          AprilTagConstants.speakerID = 7;
-          AprilTagConstants.stageIDA  = 14;
-          AprilTagConstants.stageIDB  = 15;
-          AprilTagConstants.stageIDC  = 16;
+          AprilTagConstants.ampID      = 6;
+          AprilTagConstants.speakerID  = 7;
+          AprilTagConstants.stageIDa  = 14;
+          AprilTagConstants.stageIDa  = 15;
+          AprilTagConstants.stageIDa  = 16;
+
         }
       }
   }
@@ -158,6 +161,7 @@ public class Robot extends TimedRobot
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    
     if (m_autonomousCommand != null)
     {
       m_autonomousCommand.cancel();
@@ -181,11 +185,11 @@ public class Robot extends TimedRobot
   @Override
   public void teleopPeriodic()
   {
-    if(RobotContainer.engineerXbox.getRightY() > 0.1 || RobotContainer.engineerXbox.getRightY() < -0.1){
-      ArmRotateSubsystem.m_armPIDController.setReference((ArmRotateSubsystem.ArmEncoder.getPosition()) +
-                                                        (RobotContainer.engineerXbox.getRightY() * 20),
-                                                        CANSparkMax.ControlType.kSmartMotion);                                                   
-    }
+    // if(RobotContainer.engineerXbox.getRightY() > 0.1 || RobotContainer.engineerXbox.getRightY() < -0.1){
+    //   ArmRotateSubsystem.m_armPIDController.setReference((ArmRotateSubsystem.ArmEncoder.getPosition()) +
+    //                                                     (RobotContainer.engineerXbox.getRightY() * 20),
+    //                                                     CANSparkMax.ControlType.kSmartMotion);                                                   
+    // }
   }
 
   @Override
