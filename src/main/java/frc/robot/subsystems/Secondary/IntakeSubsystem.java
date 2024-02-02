@@ -8,16 +8,19 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class IndexerSubsytem extends SubsystemBase {
+public class IntakeSubsystem extends SubsystemBase {
 
     public CANSparkMax intakeMotor;
-    public CANSparkMax launcherIntakeMotor;
+    public CANSparkMax indexerMotor;
+    public CANSparkMax launcherIndexerMotor;
     public static SparkPIDController intakePIDController;
 
-    public IndexerSubsytem() {
-        intakeMotor =  new CANSparkMax(Constants.IntakeConstants.kIntakeMotor, MotorType.kBrushless);
-        launcherIntakeMotor = new CANSparkMax(Constants.IntakeConstants.kLauncherIntakeMotor, MotorType.kBrushless);
-        launcherIntakeMotor.follow(intakeMotor);
+    public IntakeSubsystem() {
+        intakeMotor = new CANSparkMax(Constants.IntakeConstants.kIntakeMotor, MotorType.kBrushless);
+        indexerMotor = new CANSparkMax(Constants.IntakeConstants.kIndexerMotor, MotorType.kBrushless);
+        launcherIndexerMotor = new CANSparkMax(Constants.IntakeConstants.kLauncherIndexerMotor, MotorType.kBrushless);
+        indexerMotor.follow(intakeMotor);
+        launcherIndexerMotor.follow(intakeMotor);
 
                 
         /**
@@ -54,7 +57,14 @@ public class IndexerSubsytem extends SubsystemBase {
     
     public Command IntakeCmd() {
         // implicitly require `this`
-        return this.runOnce(() -> intakeMotor.set(.5));
+        return this.runOnce(() -> intakeMotor.set(0.5));
+        //set to final speed once tested
+        
+    }
+
+    public Command IntakeReverseCmd() {
+        // implicitly require `this`
+        return this.runOnce(() -> intakeMotor.set(-0.5));
         //set to final speed once tested
         
     }
