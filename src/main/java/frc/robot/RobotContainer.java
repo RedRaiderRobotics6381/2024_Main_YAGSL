@@ -19,21 +19,25 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.LauncherConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Vision.LLDriveToAprilTagPosCmd;
 import frc.robot.commands.Vision.LLDriveToObjectCmd;
+import frc.robot.commands.Vision.PVAim;
 import frc.robot.commands.swervedrive.auto.AutoBalanceCommand;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteFieldDriveAng;
 //import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
-import frc.robot.subsystems.Secondary.ArmIntakeSubsystem;
-import frc.robot.subsystems.Secondary.ArmRotateSubsystem;
+import frc.robot.subsystems.Secondary.LauncherSubsystem;
+import frc.robot.subsystems.Secondary.LauncherRotateSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 
+import org.photonvision.targeting.PhotonTrackedTarget;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import frc.robot.subsystems.Secondary.PhotonVision;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a "declarative" paradigm, very
@@ -52,8 +56,8 @@ public class RobotContainer
 
   private final SendableChooser<Command> autoChooser;
 
-  ArmIntakeSubsystem armIntakeSubsystem = new ArmIntakeSubsystem();
-  ArmRotateSubsystem armRotateSubsystem = new ArmRotateSubsystem();
+  LauncherSubsystem LauncherSubsystem = new LauncherSubsystem();
+  LauncherRotateSubsystem LauncherRotateSubsystem = new LauncherRotateSubsystem();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -65,11 +69,11 @@ public class RobotContainer
     
     // Register Named Commands
     NamedCommands.registerCommand("autoBalance", new AutoBalanceCommand(drivebase));
-    NamedCommands.registerCommand("armDown", armRotateSubsystem.rotatePosCommand(ArmConstants.posIntake));
-    NamedCommands.registerCommand("armUp", armRotateSubsystem.rotatePosCommand(ArmConstants.posDrive));
-    NamedCommands.registerCommand("armIntake", armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedIn));
-    NamedCommands.registerCommand("armHold", armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedHold));
-    NamedCommands.registerCommand("armOut", armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedOut));
+    NamedCommands.registerCommand("armDown", LauncherRotateSubsystem.rotatePosCommand(LauncherConstants.posDefault));
+    NamedCommands.registerCommand("armUp", LauncherRotateSubsystem.rotatePosCommand(LauncherConstants.posOuttake));
+    NamedCommands.registerCommand("armIntake", LauncherSubsystem.ArmIntakeCmd(LauncherConstants.intakeSpeedIn));
+    NamedCommands.registerCommand("armHold", LauncherSubsystem.ArmIntakeCmd(LauncherConstants.intakeSpeedHold));
+    NamedCommands.registerCommand("armOut", LauncherSubsystem.ArmIntakeCmd(LauncherConstants.intakeSpeedOut));
     NamedCommands.registerCommand("alignCone", new LLDriveToObjectCmd(drivebase, 0));
     NamedCommands.registerCommand("alignCube", new LLDriveToObjectCmd(drivebase, 1));
 
@@ -160,14 +164,16 @@ public class RobotContainer
     new JoystickButton(driverXbox, 4).onTrue((new InstantCommand(drivebase::zeroGyro)));
 
 
-    new JoystickButton(engineerXbox, 1).onTrue(armRotateSubsystem.rotatePosCommand(ArmConstants.posDrive)); // 180 is vertical 
-    new JoystickButton(engineerXbox, 4).onTrue(armRotateSubsystem.rotatePosCommand(ArmConstants.posIntake)); //90 is horizontal 
+    new JoystickButton(engineerXbox, 1).onTrue(LauncherRotateSubsystem.rotatePosCommand(LauncherConstants.posOuttake)); //190.0 // DO NOT RUN AT 190. LAUNCHER WILL BREAK!!
+    new JoystickButton(engineerXbox, 4).onTrue(LauncherRotateSubsystem.rotatePosCommand(LauncherConstants.posDefault)); //60.0 
     
+    new JoystickButton(engineerXbox, 7).onTrue(LauncherRotateSubsystem.rotateAutoPosCommand());
+
     //new JoystickButton(engineerXbox,3 ).whileTrue(new ArmIntakeInCmd(armIntakeSubsystem));
-    new JoystickButton(engineerXbox,3 ).whileTrue(armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedIn));
-    new JoystickButton(engineerXbox, 3).onFalse(armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedHold));
-    new JoystickButton(engineerXbox,2 ).whileTrue(armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedOut));
-    new JoystickButton(engineerXbox, 2).onFalse(armIntakeSubsystem.ArmIntakeCmd(0));
+    new JoystickButton(engineerXbox,3 ).whileTrue(LauncherSubsystem.ArmIntakeCmd(LauncherConstants.intakeSpeedIn));
+    new JoystickButton(engineerXbox, 3).onFalse(LauncherSubsystem.ArmIntakeCmd(LauncherConstants.intakeSpeedHold));
+    new JoystickButton(engineerXbox,2 ).whileTrue(LauncherSubsystem.ArmIntakeCmd(LauncherConstants.intakeSpeedOut));
+    new JoystickButton(engineerXbox, 2).onFalse(LauncherSubsystem.ArmIntakeCmd(0));
 
     //new JoystickButton(engineerXbox,7 ).whileTrue(new DriveGyro180Cmd(swerveSubsystem));
 
