@@ -66,7 +66,7 @@ public class RobotContainer
 
   ArmIntakeSubsystem armIntakeSubsystem = new ArmIntakeSubsystem();
   ArmRotateSubsystem armRotateSubsystem = new ArmRotateSubsystem();
-  IntakeSubsystem indexerSubsystem = new IntakeSubsystem();
+  //IntakeSubsystem indexerSubsystem = new IntakeSubsystem();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -181,8 +181,9 @@ public class RobotContainer
     new JoystickButton(engineerXbox, 3).onFalse(armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedHold));
     new JoystickButton(engineerXbox,2 ).whileTrue(armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedOut));
     new JoystickButton(engineerXbox, 2).onFalse(armIntakeSubsystem.ArmIntakeCmd(0));
-    if (driverXbox.getRightBumperPressed() && driverXbox.getLeftBumperPressed()){
+    if (driverXbox.getRawButton(5) && driverXbox.getRawButton(6)){
       drivebase.maximumSpeed = Units.feetToMeters(14.5);
+      Constants.Drivebase.Max_Speed = 14.5;      
     }
     if (driverXbox.getRawButton(5) || driverXbox.getRawButton(6)){
       System.out.println("MedSpd");
