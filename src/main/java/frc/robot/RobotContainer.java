@@ -34,6 +34,7 @@ import frc.robot.commands.swervedrive.auto.AutoBalanceCommand;
 //import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
 import frc.robot.subsystems.Secondary.ArmIntakeSubsystem;
 import frc.robot.subsystems.Secondary.ArmRotateSubsystem;
+import frc.robot.subsystems.Secondary.IntakeSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 //import java.util.function.Supplier;
@@ -65,6 +66,7 @@ public class RobotContainer
 
   ArmIntakeSubsystem armIntakeSubsystem = new ArmIntakeSubsystem();
   ArmRotateSubsystem armRotateSubsystem = new ArmRotateSubsystem();
+  IntakeSubsystem indexerSubsystem = new IntakeSubsystem();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -171,7 +173,7 @@ public class RobotContainer
 
 
     new JoystickButton(driverXbox, 4).onTrue((new InstantCommand(drivebase::zeroGyro)));
-    new JoystickButton(engineerXbox, 1).onTrue(armRotateSubsystem.rotatePosCommand(ArmConstants.posDrive)); // 180 is vertical 
+    //new JoystickButton(engineerXbox, 1).onTrue(armRotateSubsystem.rotatePosCommand(ArmConstants.posDrive)); // 180 is vertical 
     new JoystickButton(engineerXbox, 4).onTrue(armRotateSubsystem.rotatePosCommand(ArmConstants.posIntake)); //90 is horizontal 
     
     //new JoystickButton(engineerXbox,3 ).whileTrue(new ArmIntakeInCmd(armIntakeSubsystem));
@@ -179,10 +181,8 @@ public class RobotContainer
     new JoystickButton(engineerXbox, 3).onFalse(armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedHold));
     new JoystickButton(engineerXbox,2 ).whileTrue(armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedOut));
     new JoystickButton(engineerXbox, 2).onFalse(armIntakeSubsystem.ArmIntakeCmd(0));
-    if (driverXbox.getRawButton(5) && driverXbox.getRawButton(6)){
-      System.out.println("HighSpd");
-      //drivebase.maximumSpeed = Units.feetToMeters(14.5);
-      Constants.Drivebase.Max_Speed = 14.5;
+    if (driverXbox.getRightBumperPressed() && driverXbox.getLeftBumperPressed()){
+      drivebase.maximumSpeed = Units.feetToMeters(14.5);
     }
     if (driverXbox.getRawButton(5) || driverXbox.getRawButton(6)){
       System.out.println("MedSpd");

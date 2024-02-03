@@ -76,7 +76,9 @@ public final class Constants
 
   public static final class IntakeConstants {
     public static final int kIntakeMotor = 0; //need to change
-    public static final int kLauncherIntakeMotor = 0; //need to change
+    public static final int kIndexerMotor = 0; //need to change
+    public static final int kLauncherIndexerMotor = 0; //need to change
+    
   }
 
 
