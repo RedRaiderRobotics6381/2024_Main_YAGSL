@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 2,
-      "y": 2
+      "x": 1.0,
+      "y": 7.25
     },
     "rotation": 0
   },
@@ -12,9 +12,15 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": null
+            "pathName": "Path1A"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Path1B"
           }
         }
       ]

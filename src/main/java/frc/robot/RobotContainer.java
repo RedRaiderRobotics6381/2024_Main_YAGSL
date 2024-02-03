@@ -181,19 +181,7 @@ public class RobotContainer
     new JoystickButton(engineerXbox, 3).onFalse(armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedHold));
     new JoystickButton(engineerXbox,2 ).whileTrue(armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedOut));
     new JoystickButton(engineerXbox, 2).onFalse(armIntakeSubsystem.ArmIntakeCmd(0));
-    if (driverXbox.getRawButton(5) && driverXbox.getRawButton(6)){
-      drivebase.maximumSpeed = Units.feetToMeters(14.5);
-      Constants.Drivebase.Max_Speed = 14.5;      
-    }
-    if (driverXbox.getRawButton(5) || driverXbox.getRawButton(6)){
-      System.out.println("MedSpd");
-      //drivebase.maximumSpeed = Units.feetToMeters(12.325);
-      Constants.Drivebase.Max_Speed = 12.325;
-    }
-    if (driverXbox.getRawButtonReleased(5) && (driverXbox.getRawButtonReleased(6))){
-      //drivebase.maximumSpeed = Units.feetToMeters(10.875);
-      Constants.Drivebase.Max_Speed = 10.875;
-    }
+
     
       
 

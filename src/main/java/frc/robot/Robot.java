@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -191,6 +192,20 @@ public class Robot extends TimedRobot
     //                                                     (RobotContainer.engineerXbox.getRightY() * 20),
     //                                                     CANSparkMax.ControlType.kSmartMotion);                                                   
     // }
+    if (RobotContainer.driverXbox.getRawButton(5) == true && RobotContainer.driverXbox.getRawButton(6) == true){
+      System.out.println("HighSpd");
+      //drivebase.maximumSpeed = Units.feetToMeters(14.5);
+      Constants.Drivebase.Max_Speed = 14.5/2;      
+    }
+    if (RobotContainer.driverXbox.getRawButton(5) == true || RobotContainer.driverXbox.getRawButton(6) == true){
+      System.out.println("MedSpd");
+      //drivebase.maximumSpeed = Units.feetToMeters(12.325);
+      Constants.Drivebase.Max_Speed = 12.325/2;
+    }
+    if (RobotContainer.driverXbox.getRawButton(5) == false && (RobotContainer.driverXbox.getRawButton(6) == false)){
+      //drivebase.maximumSpeed = Units.feetToMeters(10.875);
+      Constants.Drivebase.Max_Speed = 10.875/2;
+    }
   }
 
   @Override
