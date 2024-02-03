@@ -22,26 +22,12 @@
         "window": {
           "visible": true
         }
-      },
-      "/SmartDashboard/Pigeon 2 (v6) [20]": {
-        "window": {
-          "visible": true
-        }
       }
     }
   },
-<<<<<<< Updated upstream
-  "NetworkTables Info": {
-=======
   "NetworkTables": {
-    "Persistent Values": {
-      "open": false
-    },
-    "retained": {
+    "transitory": {
       "SmartDashboard": {
-        "Auto Chooser": {
-          "open": true
-        },
         "open": true
       }
     }
@@ -50,16 +36,15 @@
     "Clients": {
       "open": true
     },
-    "Connections": {
-      "open": true
-    },
     "Server": {
+      "Publishers": {
+        "open": true
+      },
       "Subscribers": {
         "open": true
       },
       "open": true
     },
->>>>>>> Stashed changes
     "visible": true
   }
 }

@@ -74,16 +74,16 @@ public class Robot extends TimedRobot
         if (allianceColor.get() == Alliance.Red) {
           AprilTagConstants.ampID      = 5;
           AprilTagConstants.speakerID  = 4;
-          AprilTagConstants.stageIDa  = 13;
-          AprilTagConstants.stageIDa  = 12;
-          AprilTagConstants.stageIDa  = 11;
+          AprilTagConstants.stageIDA  = 13;
+          AprilTagConstants.stageIDB  = 12;
+          AprilTagConstants.stageIDC  = 11;
         }
         if (allianceColor.get() == Alliance.Blue) {
           AprilTagConstants.ampID      = 6;
           AprilTagConstants.speakerID  = 7;
-          AprilTagConstants.stageIDa  = 14;
-          AprilTagConstants.stageIDa  = 15;
-          AprilTagConstants.stageIDa  = 16;
+          AprilTagConstants.stageIDA  = 14;
+          AprilTagConstants.stageIDB  = 15;
+          AprilTagConstants.stageIDC  = 16;
 
         }
       }
@@ -138,6 +138,7 @@ public class Robot extends TimedRobot
     m_robotContainer.setMotorBrake(true);
     camera.setLED(VisionLEDMode.kDefault);
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    Constants.Drivebase.Heading_Correction = true;
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null)

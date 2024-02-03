@@ -107,7 +107,7 @@ public class ArmRotateSubsystem extends SubsystemBase {
   }
 
   public Command rotatePosMan(DoubleSupplier yPos){
-      return this.run(() -> m_armMotor.set((Math.pow(yPos.getAsDouble(), 3))));
+      return this.run(() -> m_armMotor.set(yPos.getAsDouble()*.5));
 
   }        
 
