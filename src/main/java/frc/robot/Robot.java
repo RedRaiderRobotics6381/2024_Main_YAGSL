@@ -195,16 +195,25 @@ public class Robot extends TimedRobot
     if (RobotContainer.driverXbox.getRawButton(5) == true && RobotContainer.driverXbox.getRawButton(6) == true){
       System.out.println("HighSpd");
       //drivebase.maximumSpeed = Units.feetToMeters(14.5);
-      Constants.Drivebase.Max_Speed = 14.5/2;      
+      //Constants.Drivebase.Max_Speed_Multiplier = 1;
+      Constants.Drivebase.Max_Speed = 14.5;      
     }
-    if (RobotContainer.driverXbox.getRawButton(5) == true || RobotContainer.driverXbox.getRawButton(6) == true){
+    if (RobotContainer.driverXbox.getRawButton(5) == true && RobotContainer.driverXbox.getRawButton(6) == false){
       System.out.println("MedSpd");
       //drivebase.maximumSpeed = Units.feetToMeters(12.325);
-      Constants.Drivebase.Max_Speed = 12.325/2;
+      //Constants.Drivebase.Max_Speed_Multiplier = 0.75;
+      Constants.Drivebase.Max_Speed = 12.325;
+    }
+    if (RobotContainer.driverXbox.getRawButton(5) == false && RobotContainer.driverXbox.getRawButton(6) == true){
+      System.out.println("MedSpd");
+      //drivebase.maximumSpeed = Units.feetToMeters(12.325);
+      //Constants.Drivebase.Max_Speed_Multiplier = 0.75;
+      Constants.Drivebase.Max_Speed = 12.325;
     }
     if (RobotContainer.driverXbox.getRawButton(5) == false && (RobotContainer.driverXbox.getRawButton(6) == false)){
       //drivebase.maximumSpeed = Units.feetToMeters(10.875);
-      Constants.Drivebase.Max_Speed = 10.875/2;
+      //Constants.Drivebase.Max_Speed_Multiplier = 0.5;
+      Constants.Drivebase.Max_Speed = 10.875;
     }
   }
 

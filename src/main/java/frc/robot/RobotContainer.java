@@ -118,14 +118,14 @@ public class RobotContainer
     // left stick controls translation
     // right stick controls the angular velocity of the robot
     Command driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
-        () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(-driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-        () -> MathUtil.applyDeadband(-driverXbox.getRawAxis(4), OperatorConstants.RIGHT_X_DEADBAND));
+        () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),// * Constants.Drivebase.Max_Speed_Multiplier,
+        () -> MathUtil.applyDeadband(-driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),// * Constants.Drivebase.Max_Speed_Multiplier,
+        () -> MathUtil.applyDeadband(-driverXbox.getRawAxis(4), OperatorConstants.RIGHT_X_DEADBAND));// * Constants.Drivebase.Max_Speed_Multiplier);
 
     Command driveFieldOrientedDirectAngleSim = drivebase.simDriveCommand(
-        () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getRawAxis(4), OperatorConstants.RIGHT_X_DEADBAND));
+        () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),// * Constants.Drivebase.Max_Speed_Multiplier,
+        () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),// * Constants.Drivebase.Max_Speed_Multiplier,
+        () -> MathUtil.applyDeadband(driverXbox.getRawAxis(4), OperatorConstants.RIGHT_X_DEADBAND));// * Constants.Drivebase.Max_Speed_Multiplier);
 
     // AbsoluteFieldDriveAng closedFieldAbsoluteDriveAng = new AbsoluteFieldDriveAng(drivebase,
     //                                                                   () ->
