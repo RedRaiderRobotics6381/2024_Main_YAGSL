@@ -53,13 +53,11 @@ public final class Constants
     public static final double TURN_CONSTANT    = 6;
   }
   
-<<<<<<< HEAD
   public static final class ClimberConstants {
     //TODO Change Motor IDs
     public static final int kClimberRotateMotor1 = 13;
     public static final int kClimberRotateMotor2 = 13;
-    
-=======
+  }
   public static final class LauncherConstants {
     public static final int kLauncherL = 14;
     public static final int kLauncherR = 15;
@@ -83,7 +81,19 @@ public final class Constants
     public static final double ENCODER_COUNTS_PER_REV = 42.0;
     public static final double DEGREES_PER_TICK = 360 / ENCODER_COUNTS_PER_REV;
     public static final double Camera1_pitch = Math.PI / 9;
->>>>>>> pr/1
+  }
+  public static final class ArmConstants {
+    public static final int kArmRotateMotor = 13;
+    public static final int kManipulatorIntakeMotorL = 14;
+    public static final int kManipulatorIntakeMotorR = 15;
+    public static final int kMotorPort = 4;
+
+    public static final double intakeSpeedOut = 1.00;
+    public static final double intakeSpeedIn = 0.50;
+    public static final double intakeSpeedHold = 0.062;
+    public static final double posOffset = 72.5;
+    public static final double posDrive = 190; //Was 200 see note in ArmRotateSubsystem.java
+    public static final double posIntake = 90; //Was 132.5 see note in ArmRotateSubsystem.java
   }
 
   public static final class AprilTagConstants {
