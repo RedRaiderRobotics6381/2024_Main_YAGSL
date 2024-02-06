@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -74,16 +75,16 @@ public class Robot extends TimedRobot
         if (allianceColor.get() == Alliance.Red) {
           AprilTagConstants.ampID      = 5;
           AprilTagConstants.speakerID  = 4;
-          AprilTagConstants.stageIDa  = 13;
-          AprilTagConstants.stageIDa  = 12;
-          AprilTagConstants.stageIDa  = 11;
+          AprilTagConstants.stageIDA  = 13;
+          AprilTagConstants.stageIDB  = 12;
+          AprilTagConstants.stageIDC  = 11;
         }
         if (allianceColor.get() == Alliance.Blue) {
           AprilTagConstants.ampID      = 6;
           AprilTagConstants.speakerID  = 7;
-          AprilTagConstants.stageIDa  = 14;
-          AprilTagConstants.stageIDa  = 15;
-          AprilTagConstants.stageIDa  = 16;
+          AprilTagConstants.stageIDA  = 14;
+          AprilTagConstants.stageIDB  = 15;
+          AprilTagConstants.stageIDC  = 16;
 
         }
       }
@@ -138,6 +139,7 @@ public class Robot extends TimedRobot
     m_robotContainer.setMotorBrake(true);
     camera.setLED(VisionLEDMode.kDefault);
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    Constants.Drivebase.Heading_Correction = true;
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null)
@@ -190,6 +192,29 @@ public class Robot extends TimedRobot
     //                                                     (RobotContainer.engineerXbox.getRightY() * 20),
     //                                                     CANSparkMax.ControlType.kSmartMotion);                                                   
     // }
+    if (RobotContainer.driverXbox.getRawButton(5) == true && RobotContainer.driverXbox.getRawButton(6) == true){
+      System.out.println("HighSpd");
+      //drivebase.maximumSpeed = Units.feetToMeters(14.5);
+      //Constants.Drivebase.Max_Speed_Multiplier = 1;
+      Constants.Drivebase.Max_Speed = 14.5;      
+    }
+    if (RobotContainer.driverXbox.getRawButton(5) == true && RobotContainer.driverXbox.getRawButton(6) == false){
+      System.out.println("MedSpd");
+      //drivebase.maximumSpeed = Units.feetToMeters(12.325);
+      //Constants.Drivebase.Max_Speed_Multiplier = 0.75;
+      Constants.Drivebase.Max_Speed = 12.325;
+    }
+    if (RobotContainer.driverXbox.getRawButton(5) == false && RobotContainer.driverXbox.getRawButton(6) == true){
+      System.out.println("MedSpd");
+      //drivebase.maximumSpeed = Units.feetToMeters(12.325);
+      //Constants.Drivebase.Max_Speed_Multiplier = 0.75;
+      Constants.Drivebase.Max_Speed = 12.325;
+    }
+    if (RobotContainer.driverXbox.getRawButton(5) == false && (RobotContainer.driverXbox.getRawButton(6) == false)){
+      //drivebase.maximumSpeed = Units.feetToMeters(10.875);
+      //Constants.Drivebase.Max_Speed_Multiplier = 0.5;
+      Constants.Drivebase.Max_Speed = 10.875;
+    }
   }
 
   @Override

@@ -66,7 +66,7 @@ public class RobotContainer
 
   ArmIntakeSubsystem armIntakeSubsystem = new ArmIntakeSubsystem();
   ArmRotateSubsystem armRotateSubsystem = new ArmRotateSubsystem();
-  IntakeSubsystem indexerSubsystem = new IntakeSubsystem();
+  //IntakeSubsystem indexerSubsystem = new IntakeSubsystem();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -118,14 +118,14 @@ public class RobotContainer
     // left stick controls translation
     // right stick controls the angular velocity of the robot
     Command driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
-        () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(-driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-        () -> MathUtil.applyDeadband(-driverXbox.getRawAxis(4), OperatorConstants.RIGHT_X_DEADBAND));
+        () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),// * Constants.Drivebase.Max_Speed_Multiplier,
+        () -> MathUtil.applyDeadband(-driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),// * Constants.Drivebase.Max_Speed_Multiplier,
+        () -> MathUtil.applyDeadband(-driverXbox.getRawAxis(4), OperatorConstants.RIGHT_X_DEADBAND));// * Constants.Drivebase.Max_Speed_Multiplier);
 
     Command driveFieldOrientedDirectAngleSim = drivebase.simDriveCommand(
-        () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getRawAxis(4), OperatorConstants.RIGHT_X_DEADBAND));
+        () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),// * Constants.Drivebase.Max_Speed_Multiplier,
+        () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),// * Constants.Drivebase.Max_Speed_Multiplier,
+        () -> MathUtil.applyDeadband(driverXbox.getRawAxis(4), OperatorConstants.RIGHT_X_DEADBAND));// * Constants.Drivebase.Max_Speed_Multiplier);
 
     // AbsoluteFieldDriveAng closedFieldAbsoluteDriveAng = new AbsoluteFieldDriveAng(drivebase,
     //                                                                   () ->
@@ -177,22 +177,11 @@ public class RobotContainer
     new JoystickButton(engineerXbox, 4).onTrue(armRotateSubsystem.rotatePosCommand(ArmConstants.posIntake)); //90 is horizontal 
     
     //new JoystickButton(engineerXbox,3 ).whileTrue(new ArmIntakeInCmd(armIntakeSubsystem));
-    // new JoystickButton(engineerXbox,3 ).whileTrue(armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedIn));
-    // new JoystickButton(engineerXbox, 3).onFalse(armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedHold));
-    // new JoystickButton(engineerXbox,2 ).whileTrue(armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedOut));
-    // new JoystickButton(engineerXbox, 2).onFalse(armIntakeSubsystem.ArmIntakeCmd(0));
-    new JoystickButton(engineerXbox, 1).whileTrue(indexerSubsystem.IntakeCmd());
-    new JoystickButton(engineerXbox, 4).whileTrue(indexerSubsystem.IntakeReverseCmd());
-    
-    if (driverXbox.getRightBumperPressed() && driverXbox.getLeftBumperPressed()){
-      drivebase.maximumSpeed = Units.feetToMeters(14.5);
-    }
-    if (driverXbox.getRightBumperPressed()){
-      drivebase.maximumSpeed = Units.feetToMeters(12.325);
-    }
-    if (driverXbox.getRightBumperReleased() && driverXbox.getLeftBumperReleased()){
-      drivebase.maximumSpeed = Units.feetToMeters(10.875);
-    }
+    new JoystickButton(engineerXbox,3 ).whileTrue(armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedIn));
+    new JoystickButton(engineerXbox, 3).onFalse(armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedHold));
+    new JoystickButton(engineerXbox,2 ).whileTrue(armIntakeSubsystem.ArmIntakeCmd(ArmConstants.intakeSpeedOut));
+    new JoystickButton(engineerXbox, 2).onFalse(armIntakeSubsystem.ArmIntakeCmd(0));
+
     
       
 
@@ -209,7 +198,7 @@ public class RobotContainer
     //                                                                                    60.0,
     //                                                                                    0.0,
     //                                                                                    0.0));
-    new JoystickButton(driverXbox, 5).whileTrue(new DriveToAprilTagPosCmd(photonCamera,
+    new JoystickButton(driverXbox, 7).whileTrue(new DriveToAprilTagPosCmd(photonCamera,
                                                                                        drivebase,
                                                                                        0,
                                                                                        1));
