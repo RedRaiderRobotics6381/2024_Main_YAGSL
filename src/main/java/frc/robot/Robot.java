@@ -12,11 +12,15 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+<<<<<<< HEAD
 //import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AprilTagConstants;
 //import frc.robot.commands.Vision.DriveToAprilTagPosCmd;
 import frc.robot.subsystems.Secondary.ArmRotateSubsystem;
 import frc.robot.subsystems.Secondary.Climber;
+=======
+import frc.robot.subsystems.Secondary.LauncherRotateSubsystem;
+>>>>>>> pr/1
 
 import java.io.File;
 import java.io.IOException;
@@ -171,6 +175,7 @@ public class Robot extends TimedRobot
     }
     m_robotContainer.setDriveMode();
     //m_robotContainer.setMotorBrake(true);
+<<<<<<< HEAD
     ArmRotateSubsystem.ArmRotateSetpoint = 90;
 
     camera.setDriverMode(false);
@@ -180,6 +185,12 @@ public class Robot extends TimedRobot
     // LimelightHelpers.setCameraMode_Processor("null");
     // LimelightHelpers.setLEDMode_ForceOn("");
     // LimelightHelpers.setPipelineIndex("",0);
+=======
+    LauncherRotateSubsystem.LauncherRotateSetpoint = 90;
+    LimelightHelpers.setCameraMode_Processor("null");
+    LimelightHelpers.setLEDMode_ForceOn("");
+    LimelightHelpers.setPipelineIndex("",0);
+>>>>>>> pr/1
   }
 
   /**
@@ -188,6 +199,7 @@ public class Robot extends TimedRobot
   @Override
   public void teleopPeriodic()
   {
+<<<<<<< HEAD
 <<<<<<< HEAD
     // if(RobotContainer.engineerXbox.getRightY() > 0.1 || RobotContainer.engineerXbox.getRightY() < -0.1){
     //   ArmRotateSubsystem.m_armPIDController.setReference((ArmRotateSubsystem.ArmEncoder.getPosition()) +
@@ -219,6 +231,10 @@ public class Robot extends TimedRobot
 =======
    /*  if(RobotContainer.engineerXbox.getRightY() > 0.1 || RobotContainer.engineerXbox.getRightY() < -0.1){
       Climber.m_climberPIDController.setReference((Climber.ClimberEncoder.getPosition()) +
+=======
+    if(RobotContainer.engineerXbox.getRightY() > 0.1 || RobotContainer.engineerXbox.getRightY() < -0.1){
+      LauncherRotateSubsystem.m_LauncherRotatePIDController.setReference((LauncherRotateSubsystem.LauncherRotateEncoder.getPosition()) +
+>>>>>>> pr/1
                                                         (RobotContainer.engineerXbox.getRightY() * 20),
                                                         CANSparkMax.ControlType.kSmartMotion);                                                   
 >>>>>>> pr/2
