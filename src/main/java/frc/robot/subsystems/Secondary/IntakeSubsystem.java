@@ -19,6 +19,7 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeMotor = new CANSparkMax(Constants.IntakeConstants.kIntakeMotor, MotorType.kBrushless);
         indexerMotor = new CANSparkMax(Constants.IntakeConstants.kIndexerMotor, MotorType.kBrushless);
         launcherIndexerMotor = new CANSparkMax(Constants.IntakeConstants.kLauncherIndexerMotor, MotorType.kBrushless);
+        
         indexerMotor.follow(intakeMotor);
         launcherIndexerMotor.follow(intakeMotor);
 
