@@ -31,7 +31,8 @@ public class ArmRotateSubsystem extends SubsystemBase {
   
   //public static double RotateManualPos;
   /** Creates a new ArmRotateSubSys. 
- * @param armRotateSubsystem*/
+ * @param armRotateSubsystem
+ * */
   public ArmRotateSubsystem() {
         // initialize motor
         m_armMotor = new CANSparkMax(ArmConstants.kArmRotateMotor, MotorType.kBrushless);
